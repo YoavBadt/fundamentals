@@ -1,41 +1,100 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-class NumInput extends React.Component {
-  render(){
-    let label = this.props.label !== '' ?
-    <label>{this.props.label} : {this.props.val}</label> : ''
-    return (
-      <div className="controlContainer">
-      <input ref="inp"
-        type={this.props.type}
-        min={this.props.min}
-        max={this.props.max}
-        step={this.props.step}
-        defaultValue={this.props.val}
-        onChange={this.props.update} />
-        <br />
-        {label}
-      </div>
-    );
+var NumInput = React.createClass({
+getInitialState : function(){
+    return {
+    value : this.props.value
+    }
+},
+plus : function (e){
+  console.log(e.target.value)
+},
+minus : function (e){
+  console.log(e.target.value)
+},
+change : function(e){
+  console.log("change")
+},
+render : function(){
+  var style = {
+    container : {
+      width: 60,
+      border: 'red 1px solid',
+      height: 30,
+      display: 'flex',
+      flexDirection: 'row',
+      borderRadius: 2,
+      color: 'red',
+    },
+    input : {
+      border: 'none',
+      height: 30,
+      width: 45,
+      color: 'red',
+      fontWeight : 'bold',
+      fontSize: 15,
+      lineHeight: 30+'px',
+      textAlign: 'center',
+      padding: 0,
+      margin: 0
+    },
+    buttoncontainer:{
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    button: {
+      border: 'none',
+      outline: '1px solid red',
+      color: 'red',
+      fontWeight: 'bold',
+      background: 'rgba(255,0,0,0.1)',
+      width: 15,
+      height: 15,
+      padding: 0,
+      margin: 0,
+      textAlign: 'center',
+      lineHeight: 15+'px',
+      fontSize : 10
+    }
   }
+  return(
+    <div style={style.container}>
+      <input type="number" style={style.input} valueLink={this.props.valueLink} step={this.props.step} ref="input"/>
+      <div style={style.buttoncontainer}>
+        <button type="button" style={style.button} onClick={this.plus} >+</button>
+        <button type="button" style={style.button} onClick={this.minus}>-</button>
+      </div>
+    </div>
+  )
 }
 
-NumInput.propTypes = {
-  min: React.PropTypes.number,
-  max: React.PropTypes.number,
-  step: React.PropTypes.number,
-  val: React.PropTypes.number,
-  label: React.PropTypes.string,
-  update: React.PropTypes.func.isRequired,
+});
+
+var Plus = React.createClass({
+
+render : function (){
+  var style = {
+  button: {
+      border: 'none',
+      outline: '1px solid red',
+      color: 'red',
+      fontWeight: 'bold',
+      background: 'rgba(255,0,0,1)',
+      width: 30,
+      height: 15,
+      padding: 0,
+      margin: 0,
+      textAlign: 'center',
+      lineHeight: 15+'px',
+      fontSize : 10
+    }
+  }
+  return(
+    <button type="button" style={style.button} onClick={this.plus} >+</button>
+    )
 }
 
-NumInput.defaultProps = {
-  min: 0,
-  max: 0,
-  step: 1,
-  val: 0,
-  label: '',
-  type: 'range'
-}
+});
 
 export default NumInput
