@@ -175,7 +175,8 @@ render : function() {
     },
     text : {
       width: this.props.state.baseUnit * 23,
-      margin: '0 auto'
+      position: 'absolute',
+      left: 270
     }
   }
   return (

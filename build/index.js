@@ -71,30 +71,34 @@
 
 	var _textcomponent2 = _interopRequireDefault(_textcomponent);
 
-	var _baseUnit = __webpack_require__(165);
+	var _card = __webpack_require__(165);
+
+	var _card2 = _interopRequireDefault(_card);
+
+	var _baseUnit = __webpack_require__(166);
 
 	var _baseUnit2 = _interopRequireDefault(_baseUnit);
 
-	var _baseline = __webpack_require__(168);
+	var _baseline = __webpack_require__(169);
 
 	var _baseline2 = _interopRequireDefault(_baseline);
 
-	var _column = __webpack_require__(170);
+	var _column = __webpack_require__(171);
 
 	var _column2 = _interopRequireDefault(_column);
 
-	var _basefontsize = __webpack_require__(171);
+	var _basefontsize = __webpack_require__(172);
 
 	var _basefontsize2 = _interopRequireDefault(_basefontsize);
 
-	var _modularscale = __webpack_require__(172);
+	var _modularscale = __webpack_require__(173);
 
 	var _modularscale2 = _interopRequireDefault(_modularscale);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// import App from 'app';
-	var LinkedStateMixin = __webpack_require__(173);
+	var LinkedStateMixin = __webpack_require__(174);
 	// import Controls from './components/controls.js'
 
 
@@ -102,12 +106,19 @@
 	  displayName: 'App',
 
 	  mixins: [LinkedStateMixin],
+	  modScale: function modScale() {},
+	  componentWillMount: function componentWillMount() {
+	    var modularscale = this.state.scaleFactor;
+	    var baseFontSize = this.state.baseFontSize;
+	    var modScale = [Math.floor(baseFontSize * 1), Math.floor(baseFontSize * modularscale), Math.floor(baseFontSize * Math.pow(modularscale, 2)), Math.floor(baseFontSize * Math.pow(modularscale, 3)), Math.floor(baseFontSize * Math.pow(modularscale, 4)), Math.floor(baseFontSize * Math.pow(modularscale, 5)), Math.floor(baseFontSize * Math.pow(modularscale, 6))];
+	    this.setState({ modScale: modScale });
+	  },
 	  getInitialState: function getInitialState() {
 	    return {
 	      baseUnit: 20,
 	      baseDivisions: 1,
-	      baseOffSet: 0,
-	      baseVisibility: 0,
+	      baseOffSet: 10,
+	      baseVisibility: 1,
 	      baseFontSize: 16,
 	      baseLineHeight: 1,
 	      baseLineHeightPx: 20,
@@ -115,13 +126,21 @@
 	      baseLineHeightOffset: 0,
 	      baseLineVisibility: 1,
 	      baselineColor: 'blue',
-	      modularScale: 1.2,
+	      scaleFactor: 1.2,
+	      modScale: [1, 2, 3, 4, 5, 6],
+	      columnNumber: 12,
 	      columnWidth: 5,
 	      gutterWidth: 1,
-	      columnVisibility: 0,
+	      columnVisibility: 1,
 	      rowHeight: 5,
 	      rowGutter: 1,
-	      gridColor: "red"
+	      gridColor: "red",
+	      typography: {
+	        h1: {
+	          fontSize: 60,
+	          lineHeight: 40
+	        }
+	      }
 	    };
 	  },
 	  render: function render() {
@@ -132,7 +151,8 @@
 	        'div',
 	        { className: 'content' },
 	        _react2.default.createElement(_grids2.default, { state: this.state }),
-	        _react2.default.createElement(_textcomponent2.default, { state: this.state })
+	        _react2.default.createElement(_textcomponent2.default, { state: this.state }),
+	        _react2.default.createElement(_card2.default, { state: this.state })
 	      ),
 	      _react2.default.createElement(
 	        'div',
@@ -159,8 +179,9 @@
 	        }),
 	        _react2.default.createElement(_modularscale2.default, {
 	          name: 'Modular Scale',
-	          valueLink: this.linkState('modularScale'),
-	          state: this.state
+	          valueLink: this.linkState('scaleFactor'),
+	          state: this.state,
+	          onChange: this.onChange
 	        }),
 	        _react2.default.createElement(_column2.default, {
 	          name: 'Column width',
@@ -19814,7 +19835,7 @@
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      null,
+	      { style: { position: 'absolute', zIndex: -1, top: 0, left: 0 } },
 	      _react2.default.createElement(_BaseGridComponent2.default, { state: this.props.state }),
 	      _react2.default.createElement(_ColumnComponent2.default, { state: this.props.state }),
 	      _react2.default.createElement(_BaseLineComponent2.default, { state: this.props.state })
@@ -20056,7 +20077,7 @@
 
 	  mod: function mod(modularscale, baseFontSize) {
 	    var scale = [Math.floor(baseFontSize * 1), Math.floor(baseFontSize * modularscale), Math.floor(baseFontSize * Math.pow(modularscale, 2)), Math.floor(baseFontSize * Math.pow(modularscale, 3)), Math.floor(baseFontSize * Math.pow(modularscale, 4)), Math.floor(baseFontSize * Math.pow(modularscale, 5)), Math.floor(baseFontSize * Math.pow(modularscale, 6))];
-	    console.log(scale);
+	    // console.log(scale)
 	    return scale;
 	  },
 	  line: function line(fontsize, baseline, tolerance) {
@@ -20065,7 +20086,8 @@
 	    return newbaseline;
 	  },
 	  render: function render() {
-	    var modularscale = this.props.state.modularScale;
+	    console.log(this.props.state.modScale);
+	    var modularscale = this.props.state.scaleFactor;
 	    var basefontsize = this.props.state.baseFontSize;
 
 	    var mod = this.mod(modularscale, basefontsize);
@@ -20074,27 +20096,6 @@
 	    var tolerance = baseline / this.props.state.baseLineHeightDivision;
 
 	    var typo = {
-	      body: {
-	        fontSize: mod[0],
-	        lineHeight: this.line(mod[0], baseline, tolerance) + 'px',
-	        outline: '1px solid pink',
-	        marginLeft: 0,
-	        marginRight: 0,
-	        marginBottom: tolerance,
-	        marginTop: tolerance
-	      },
-	      bodybefore: {
-	        content: '',
-	        height: this.line(mod[0], baseline, tolerance),
-	        display: 'inline-block',
-	        verticalAlign: 'baseline'
-	      },
-	      bodyafter: {
-	        content: '',
-	        display: 'inline-block',
-	        verticalAlign: this.line(mod[0], baseline, tolerance) * -1,
-	        height: this.line(mod[0], baseline, tolerance)
-	      },
 	      h1: {
 	        fontSize: mod[6],
 	        lineHeight: this.line(mod[6], baseline, tolerance) + 'px',
@@ -20202,6 +20203,28 @@
 	        display: 'inline-block',
 	        verticalAlign: baseline * -1,
 	        height: baseline
+	      },
+	      body: {
+	        fontFamily: 'sans-serif',
+	        fontSize: mod[0],
+	        lineHeight: this.line(mod[0], baseline, tolerance) + 'px',
+	        outline: '1px solid pink',
+	        marginLeft: 0,
+	        marginRight: 0,
+	        marginBottom: tolerance,
+	        marginTop: tolerance
+	      },
+	      bodybefore: {
+	        content: '',
+	        height: this.line(mod[0], baseline, tolerance),
+	        display: 'inline-block',
+	        verticalAlign: 'baseline'
+	      },
+	      bodyafter: {
+	        content: '',
+	        display: 'inline-block',
+	        verticalAlign: this.line(mod[0], baseline, tolerance) * -1,
+	        height: this.line(mod[0], baseline, tolerance)
 	      }
 	    };
 	    var layout = {
@@ -20217,7 +20240,8 @@
 	      // background: 'white'
 	      text: {
 	        width: this.props.state.baseUnit * 23,
-	        margin: '0 auto'
+	        position: 'absolute',
+	        left: 270
 	      }
 	    };
 	    return _react2.default.createElement(
@@ -20234,6 +20258,7 @@
 	          mod[6],
 	          ' / ',
 	          this.line(mod[6], baseline, tolerance),
+	          ' Ag not connected',
 	          _react2.default.createElement('span', { style: typo.h1after })
 	        ),
 	        _react2.default.createElement(
@@ -20244,6 +20269,7 @@
 	          mod[5],
 	          ' / ',
 	          this.line(mod[5], baseline, tolerance),
+	          ' Ag',
 	          _react2.default.createElement('span', { style: typo.h2after })
 	        ),
 	        _react2.default.createElement(
@@ -20254,6 +20280,7 @@
 	          mod[4],
 	          ' / ',
 	          this.line(mod[4], baseline, tolerance),
+	          ' Ag',
 	          _react2.default.createElement('span', { style: typo.h3after })
 	        ),
 	        _react2.default.createElement(
@@ -20264,6 +20291,7 @@
 	          mod[3],
 	          ' / ',
 	          this.line(mod[3], baseline, tolerance),
+	          ' Ag',
 	          _react2.default.createElement('span', { style: typo.h3after })
 	        ),
 	        _react2.default.createElement(
@@ -20274,6 +20302,7 @@
 	          mod[2],
 	          ' / ',
 	          this.line(mod[2], baseline, tolerance),
+	          ' Ag',
 	          _react2.default.createElement('span', { style: typo.h5after })
 	        ),
 	        _react2.default.createElement(
@@ -20284,12 +20313,18 @@
 	          mod[1],
 	          ' / ',
 	          this.line(mod[1], baseline, tolerance),
+	          ' Ag',
 	          _react2.default.createElement('span', { style: typo.h6after })
 	        ),
 	        _react2.default.createElement(
 	          'p',
 	          { style: typo.body },
 	          _react2.default.createElement('span', { style: typo.bodybefore }),
+	          'I am body font size ',
+	          mod[1],
+	          ' / line height ',
+	          this.line(mod[0], baseline, tolerance),
+	          _react2.default.createElement('br', null),
 	          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae dictum tellus, nec sagittis leo. Fusce quis leo ac ipsum auctor varius. Donec convallis, nunc nec mollis faucibus, urna arcu pretium justo, in mollis orci tortor et libero. Vivamus dignissim placerat erat, eu dictum sem laoreet eget. Phasellus convallis, mauris non commodo posuere, lorem est vestibulum lorem, congue efficitur metus est quis turpis. Maecenas leo mi, interdum at augue id, fringilla dictum enim. Nulla sit amet suscipit est. In at suscipit dolor. Etiam id mollis turpis, quis imperdiet diam. Morbi nibh nulla, posuere et consectetur vel, consectetur id mi.',
 	          _react2.default.createElement('span', { style: typo.bodyafter })
 	        )
@@ -20331,7 +20366,7 @@
 	          'li',
 	          null,
 	          'modularScale = ',
-	          this.props.state.modularScale
+	          this.props.state.scaleFactor
 	        ),
 	        _react2.default.createElement(
 	          'li',
@@ -20390,11 +20425,82 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _numinput = __webpack_require__(166);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Card = _react2.default.createClass({
+	  displayName: 'Card',
+
+	  width: function width(param) {
+	    var unit = this.props.state.baseUnit;
+	    var column = this.props.state.columnWidth * unit;
+	    var gutter = this.props.state.gutterWidth * unit;
+	    return param * column + (param - 1) * gutter;
+	  },
+	  height: function height(param) {
+	    var unit = this.props.state.baseUnit;
+	    var baseline = this.props.state.baseLineHeight * unit;
+	    return baseline * param;
+	  },
+	  render: function render() {
+	    var column = this.props.state.columnWidth;
+	    var gutter = this.props.state.gutterWidth;
+	    var unit = this.props.state.baseUnit;
+	    var colnum = this.props.state.columnNumber;
+	    var stage = colnum * (column * unit) + (colnum - 1) * (gutter * unit);
+	    console.log(stage);
+	    var zero = (1920 - stage) / 2;
+	    var style = {
+	      container: {
+	        position: 'absolute',
+	        top: this.height(5),
+	        left: zero + stage / 2 - this.width(4) / 2,
+	        width: this.width(4),
+	        height: this.height(22),
+	        boxSizing: 'border-box',
+	        padding: unit * 1,
+	        borderRadius: 4,
+	        outline: '1px solid grey',
+	        // margin: '0 auto',
+	        background: 'white'
+	      },
+	      img: {
+	        position: 'absolute',
+	        top: unit * 1,
+	        left: unit * 1,
+	        width: this.width(4) - unit * 2,
+	        height: this.height(14),
+	        objectFit: 'fill'
+	      }
+	    };
+	    return _react2.default.createElement(
+	      'div',
+	      { style: style.container },
+	      _react2.default.createElement('img', { style: style.img, src: 'http://lattaland.com/wp-content/uploads/2013/06/clown-jungle.jpg' })
+	    );
+	  }
+	});
+
+	exports.default = Card;
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _numinput = __webpack_require__(167);
 
 	var _numinput2 = _interopRequireDefault(_numinput);
 
-	var _rangeinput = __webpack_require__(167);
+	var _rangeinput = __webpack_require__(168);
 
 	var _rangeinput2 = _interopRequireDefault(_rangeinput);
 
@@ -20466,7 +20572,7 @@
 	exports.default = BaseUnit;
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20524,7 +20630,7 @@
 	exports.default = NumInput;
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20585,7 +20691,7 @@
 	exports.default = RangeInput;
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20598,11 +20704,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _inlinestyles = __webpack_require__(169);
+	var _inlinestyles = __webpack_require__(170);
 
 	var _inlinestyles2 = _interopRequireDefault(_inlinestyles);
 
-	var _numinput = __webpack_require__(166);
+	var _numinput = __webpack_require__(167);
 
 	var _numinput2 = _interopRequireDefault(_numinput);
 
@@ -20677,7 +20783,7 @@
 	exports.default = BaseLine;
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20738,7 +20844,7 @@
 	exports.default = Styles;
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20751,7 +20857,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _numinput = __webpack_require__(166);
+	var _numinput = __webpack_require__(167);
 
 	var _numinput2 = _interopRequireDefault(_numinput);
 
@@ -20836,7 +20942,7 @@
 	exports.default = Column;
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20849,7 +20955,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _rangeinput = __webpack_require__(167);
+	var _rangeinput = __webpack_require__(168);
 
 	var _rangeinput2 = _interopRequireDefault(_rangeinput);
 
@@ -20892,7 +20998,7 @@
 	exports.default = BaseFontSize;
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20905,7 +21011,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _rangeinput = __webpack_require__(167);
+	var _rangeinput = __webpack_require__(168);
 
 	var _rangeinput2 = _interopRequireDefault(_rangeinput);
 
@@ -20914,7 +21020,10 @@
 	var ModularScale = _react2.default.createClass({
 	  displayName: 'ModularScale',
 
+
 	  render: function render() {
+	    var baseFontSize = this.props.state.baseFontSize;
+	    var modularScale = this.props.state.scaleFactor;
 	    var style = {
 	      container: {
 	        borderBottom: '1px solid pink',
@@ -20948,13 +21057,13 @@
 	exports.default = ModularScale;
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(174);
+	module.exports = __webpack_require__(175);
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20971,8 +21080,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(175);
-	var ReactStateSetters = __webpack_require__(176);
+	var ReactLink = __webpack_require__(176);
+	var ReactStateSetters = __webpack_require__(177);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -20995,7 +21104,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21069,7 +21178,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports) {
 
 	/**

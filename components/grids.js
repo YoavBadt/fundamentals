@@ -7,7 +7,7 @@ import BaseLineComponent from './grids/BaseLineComponent'
 var Grids = React.createClass({
   render : function(){
     return(
-      <div>
+      <div style={{position: 'absolute',zIndex: -1,top:0,left:0}}>
         <BaseGridComponent state={this.props.state} />
         <ColumnComponent state= {this.props.state} />
         <BaseLineComponent state= {this.props.state} />

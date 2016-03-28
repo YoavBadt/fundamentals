@@ -36,10 +36,10 @@ var App = React.createClass({
   },
   getInitialState : function(){
     return {
-      baseUnit : 24,
+      baseUnit : 20,
       baseDivisions : 1,
-      baseOffSet : 0,
-      baseVisibility: 0,
+      baseOffSet : 10,
+      baseVisibility: 1,
       baseFontSize: 16,
       baseLineHeight: 1,
       baseLineHeightPx: 20,
@@ -49,9 +49,10 @@ var App = React.createClass({
       baselineColor: 'blue',
       scaleFactor : 1.2,
       modScale : [1,2,3,4,5,6],
+      columnNumber : 12,
       columnWidth : 5,
       gutterWidth : 1,
-      columnVisibility : 0,
+      columnVisibility : 1,
       rowHeight : 5,
       rowGutter : 1,
       gridColor : "red",
@@ -68,8 +69,8 @@ var App = React.createClass({
       <div className="app">
         <div className="content">
           <Grids state={this.state}/>
-          
-          <TextComponent state ={this.state} />
+          <TextComponent state={this.state}/>
+          <Card state={this.state}/>
         </div>
         <div className="controls">
           <BaseUnit
