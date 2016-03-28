@@ -1,15 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+import BaseUnit from './baseUnit'
 
 var Controls = React.createClass({
   render : function() {
     return (
       <div className="controls">
-        <RangeInput />
-        <RangeInput />
-        <RangeInput />
-        <RangeInput />
-        <RangeInput />
+      <input type="text" valueLink={this.props.valueLink.gridColor} />
+
       </div>
     )
   }
