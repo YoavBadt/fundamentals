@@ -1,6 +1,18 @@
 body{
   margin: 0;
   padding:0;
+  /*background-image: url(http://basehold.it/i/20)*/
+}
+.p1{
+  background: white;
+}
+.p1:before{
+  content:'';
+  display: inline-block;
+  vertical-align: baseline;
+  height: 20px;
+  width: 20px;
+  background: blue;
 }
 
 .app{
@@ -8,7 +20,8 @@ body{
 }
 .controls{
   width:240px;
-  height: 100vh - 20px;
+  height: 1000px;
+  box-sizing: border-box;
   background-color: rgba(255,255,255,1);
   font-family: sans-serif;
   font-size: 15px;
@@ -18,18 +31,21 @@ body{
   /*background-image: url(http://basehold.it/i/20);*/
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   left: 20px;
   top: 20px;
   bottom:20px;
+  overflow: scroll;
 }
 
 .content{
-  font-family:  Avenir;
+  font-family: Avenir;
   /*background-image: url(http://basehold.it/i/20);*/
+  /*outline: 1px solid red;
+  background: grey;*/
   width:100vw;
   min-height:100vh;
-
+  margin:0;
 }
 
 .title{
@@ -49,6 +65,7 @@ height:80px;
 box-sizing: border-box;
 display: flex;
 flex-direction: column;
+justify-content: space-between;
 }
 
 .controlContainer2{
@@ -81,7 +98,9 @@ label{
   /*background:red;*/
 }
 
+small{
 
+}
 Input{
   width:100%;
   height:20px;
@@ -91,21 +110,25 @@ Input{
 }
 input[type=range]{
     -webkit-appearance: none;
+    height:20px;
+    display: block;
+    box-sizing: border-box;
 }
 Input[type=range]::-webkit-slider-runnable-track{
-  background-color: red;
-  height:1px;
+  background-color: pink;
+  height:4px;
   border: none;
-  border-radius: 3px;
 }
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: none;
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     background: red;
-    margin-top: -4px;
+    border : white solid 4px;
+    box-sizing: border-box;
+    margin-top: -8px;
 }
 
 input[type=range]:focus {
@@ -123,8 +146,84 @@ margin-bottom: 1px;
 
 }
 
+.numinput{
+  box-sizing: border-box;
+  font-family:monospace;
+  padding:0;
+  margin:0;
+  width: 45px;
+  border: red 1px solid;
+  height: 30px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  color: red
+}
+input[type=number]{
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 4px;
+  height: 30px;
+  color: red;
+  font-weight : bold;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+input[type=number]:focus{
+  -webkit-appearance: none;
+  border:none;
+  outline: none;
+}
+input[type=number]:active{
+  -webkit-appearance: none;
+}
 
+input[type=number]::-webkit-inner-spin-button {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  background: rgba(255,0,0,0.1);
+  border: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: red;
+  font-weight: bold;
+  width: 15px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  line-height: 15px;
+  fontSize : 10px;
+  display:flex;
+  flex-direction: column;
+  opacity: 1;
+}
+input[type=number]::-webkit-inner-spin-button:before,
+input[type=number]::-webkit-inner-spin-button:after {
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  line-height: 13px;
+  width:15px;
+  height:15px;
+  opacity: 1;
+  color: red;
+  padding: 0;
+  margin: 0;
+  border: 1px solid red;
+}
+input[type=number]::-webkit-inner-spin-button:before {
+  content: "+";
+  border-top-right-radius: 4px;
 
+}
+input[type=number]::-webkit-inner-spin-button:after {
+  /*-webkit-transform: rotate(180deg);*/
+  content: "-";
+  border-bottom-right-radius: 4px;
+}
 
 
 
