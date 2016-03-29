@@ -17,8 +17,11 @@ import ModularScale from './components/modularscale'
 
 var App = React.createClass({
   mixins : [LinkedStateMixin],
-  modScale : function(){
-
+  handleResize: function(e) {
+    this.setState({windowWidth: window.innerWidth});
+  },
+  componentDidMount: function() {
+    window.addEventListener('resize', this.handleResize);
   },
   componentWillMount : function(){
     var modularscale = this.state.scaleFactor
@@ -33,13 +36,15 @@ var App = React.createClass({
       Math.floor(baseFontSize * Math.pow(modularscale,6)),
       ];
     this.setState({modScale : modScale})
+
   },
   getInitialState : function(){
     return {
-      baseUnit : 20,
-      baseDivisions : 1,
-      baseOffSet : 10,
-      baseVisibility: 1,
+      windowWidth : window.innerWidth,
+      baseUnit : 24,
+      baseDivisions : 2,
+      baseOffSet : 0,
+      baseVisibility: 0,
       baseFontSize: 16,
       baseLineHeight: 1,
       baseLineHeightPx: 20,
@@ -50,12 +55,12 @@ var App = React.createClass({
       scaleFactor : 1.2,
       modScale : [1,2,3,4,5,6],
       columnNumber : 12,
-      columnWidth : 5,
+      columnWidth : 4,
       gutterWidth : 1,
-      columnVisibility : 1,
+      columnVisibility : 0,
       rowHeight : 5,
       rowGutter : 1,
-      gridColor : "red",
+      gridColor : "blue",
       typography : {
         h1 : {
           fontSize : 60,
@@ -69,8 +74,8 @@ var App = React.createClass({
       <div className="app">
         <div className="content">
           <Grids state={this.state}/>
-          <TextComponent state={this.state}/>
-          <Card state={this.state}/>
+          <TextComponent state={this.state} display={{display: 'block'}}/>
+          <Card state={this.state} display={{display: 'none'}}/>
         </div>
         <div className="controls">
           <BaseUnit
@@ -103,7 +108,7 @@ var App = React.createClass({
             name="Column width"
             valueLink={this.linkState('columnWidth')}
             valueLink2={this.linkState('gutterWidth')}
-            valueLink3={this.linkState('rowHeight')}
+            valueLink3={this.linkState('columnNumber')}
             valueLink4={this.linkState('rowGutter')}
             valueLink5={this.linkState('columnVisibility')}
             state={this.state}

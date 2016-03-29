@@ -15,6 +15,12 @@ mod : function(modularscale,baseFontSize){
     // console.log(scale)
     return(scale)
   },
+width : function(number){
+  var unit = this.props.state.baseUnit
+  var column = this.props.state.columnWidth * unit
+  var gutter = this.props.state.gutterWidth * unit
+  return ((number*(column + gutter))-gutter)  
+},
 line : function(fontsize,baseline,tolerance){
   var newbaseline = (Math.floor(fontsize/tolerance)*tolerance)+tolerance;
   // console.log(newbaseline);
@@ -146,8 +152,9 @@ render : function() {
       outline: '1px solid pink',
       marginLeft: 0,
       marginRight: 0,
-      marginBottom: tolerance,
-      marginTop: tolerance
+      marginBottom: 0,
+      marginTop: 0
+      
     },
     bodybefore : {
       content: '',
@@ -174,13 +181,12 @@ render : function() {
     // background: 'white'
     },
     text : {
-      width: this.props.state.baseUnit * 23,
-      position: 'absolute',
-      left: 270
+      width: this.width(4),
+      margin: '0 auto',
     }
   }
   return (
-    <div>
+    <div style={this.props.display}>
     <div style={layout.text}>
 
     <h1 style={typo.h1}>
@@ -213,6 +219,11 @@ render : function() {
       I am h6 {mod[1]} / {this.line(mod[1],baseline,tolerance)} Ag
       <span style={typo.h6after}></span>
     </h6>
+    <p style={typo.body}>
+      <span style={typo.bodybefore}></span>
+      I am body font size {mod[1]} / line height {this.line(mod[0],baseline,tolerance)}<br />
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae dictum tellus, nec sagittis leo. Fusce quis leo ac ipsum auctor varius. Donec convallis, nunc nec mollis faucibus, urna arcu pretium justo, in mollis orci tortor et libero. Vivamus dignissim placerat erat, eu dictum sem laoreet eget. Phasellus convallis, mauris non commodo posuere, lorem est vestibulum lorem, congue efficitur metus est quis turpis. Maecenas leo mi, interdum at augue id, fringilla dictum enim. Nulla sit amet suscipit est. In at suscipit dolor. Etiam id mollis turpis, quis imperdiet diam. Morbi nibh nulla, posuere et consectetur vel, consectetur id mi.
+      <span style={typo.bodyafter}></span></p>
     <p style={typo.body}>
       <span style={typo.bodybefore}></span>
       I am body font size {mod[1]} / line height {this.line(mod[0],baseline,tolerance)}<br />

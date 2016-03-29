@@ -10,8 +10,10 @@ render : function() {
       top: '0'
     }
     var baseLineHeight = this.props.state.baseLineHeight * this.props.state.baseUnit;
+    var baseLineHeight2 = baseLineHeight - 0.5;
     var visibility = this.props.state.baseLineVisibility;
-    var div = baseLineHeight / this.props.state.baseLineHeightDivision ;
+    var div = baseLineHeight / this.props.state.baseLineHeightDivision;
+    var div2 = div - 0.5;
     var color = this.props.state.baselineColor;
     
   return (
@@ -19,10 +21,10 @@ render : function() {
       <svg style={gridStyle}>
         <defs>
           <pattern id="Division" x="0" y="0" width="100%" height={div} patternUnits="userSpaceOnUse">
-            <line strokeWidth="1" stroke={color} strokeOpacity="1" x1="0" x2="100%" y1={div} y2={div} strokeDasharray="1,1"/>
+            <line strokeWidth="1" stroke={color} strokeOpacity="1" x1="0" x2="100%" y1={div2} y2={div2} strokeDasharray="1,1"/>
           </pattern>
           <pattern id="baselinePattern" x="0" y="0" width="100%" height={baseLineHeight} patternUnits="userSpaceOnUse">
-          <line strokeWidth="1" stroke={color} strokeOpacity="1" x1="0" x2="100%" y1={baseLineHeight} y2={baseLineHeight} />
+          <line strokeWidth="1" stroke={color} strokeOpacity="1" x1="0" x2="100%" y1={baseLineHeight2} y2={baseLineHeight2} />
             <rect x="0" y="0" width="100%" height={baseLineHeight} fillOpacity="1"  strokeOpacity="0" fill="url(#Division)"/>
           </pattern>
         </defs>

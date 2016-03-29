@@ -46,7 +46,7 @@ var Card = React.createClass({
         }
     }
     return(
-      <div style={style.container}>
+      <div style={style.container} style={this.props.display}>
       <img style={style.img} src="http://lattaland.com/wp-content/uploads/2013/06/clown-jungle.jpg" />
       </div>
     )
