@@ -181,7 +181,7 @@ render : function() {
     // background: 'white'
     },
     text : {
-      width: this.width(4),
+      width: this.width(6),
       margin: '0 auto',
     }
   }

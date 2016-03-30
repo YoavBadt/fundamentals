@@ -27,7 +27,7 @@ render: function(){
     return (
       <div style={style.container}>
         <label style={style.title}>{this.props.name}</label>
-        <RangeInput step={0.001} min={1.001} max={2} valueLink={this.props.valueLink}/>
+        <RangeInput step={0.001} min={1.001} max={1.6} valueLink={this.props.valueLink}/>
       </div>
       )
   }

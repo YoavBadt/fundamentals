@@ -47,7 +47,7 @@ var Column = React.createClass({
         <label style={style.title}>{this.props.name}</label>
         <div style={style.section}>
           <NumInput step="0.5" min="0.5" max="10" valueLink={this.props.valueLink} label="Column"/>
-          <NumInput step="0.5" min="0.5" max="4" valueLink={this.props.valueLink2} label="Gutter"/>
+          <NumInput step="0.25" min="0" max="4" valueLink={this.props.valueLink2} label="Gutter"/>
           <NumInput step="1" min="1" max="18" valueLink={this.props.valueLink3} label="Number"/>
           <NumInput step="1" min="0" max="1" valueLink={this.props.valueLink5} label="view"/>
         </div>
@@ -55,7 +55,6 @@ var Column = React.createClass({
         <small style={style.small}>gutter width: {gutterpx}px</small>
         <small style={style.small}>stage width: {stage}px</small>
         <small style={style.small}>screen size: {this.props.state.windowWidth}px</small>
-
       </div>
     )
   }

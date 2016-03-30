@@ -18,10 +18,18 @@ import ModularScale from './components/modularscale'
 var App = React.createClass({
   mixins : [LinkedStateMixin],
   handleResize: function(e) {
-    this.setState({windowWidth: window.innerWidth});
+    this.setState({windowWidth: window.innerWidth + 1});
+  },
+  setStage : function(column,gutter,columnNumber){
+    var unit = this.state.baseUnit
+    var stage = ((column*unit)*columnNumber) + ((gutter*unit) * (columnNumber-1))
+    console.log(stage);
+    this.setState({stage : stage});
+    this.setState({fakeWindow : window.innerWidth + 1 })
   },
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
+    this.setStage(this.state.columnWidth,this.state.gutterWidth,this.state.columnNumber)
   },
   componentWillMount : function(){
     var modularscale = this.state.scaleFactor
@@ -35,12 +43,16 @@ var App = React.createClass({
       Math.floor(baseFontSize * Math.pow(modularscale,5)),
       Math.floor(baseFontSize * Math.pow(modularscale,6)),
       ];
-    this.setState({modScale : modScale})
+    this.setState({
+      modScale : modScale
+    })
 
   },
   getInitialState : function(){
     return {
-      windowWidth : window.innerWidth,
+      windowWidth : window.innerWidth + 1,
+      stage : 0,
+      fakeWindow: 0,
       baseUnit : 24,
       baseDivisions : 2,
       baseOffSet : 0,
@@ -57,7 +69,7 @@ var App = React.createClass({
       columnNumber : 12,
       columnWidth : 4,
       gutterWidth : 1,
-      columnVisibility : 0,
+      columnVisibility : 1,
       rowHeight : 5,
       rowGutter : 1,
       gridColor : "blue",

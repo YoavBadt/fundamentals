@@ -15,6 +15,10 @@ render : function() {
     var div = baseLineHeight / this.props.state.baseLineHeightDivision;
     var div2 = div - 0.5;
     var color = this.props.state.baselineColor;
+
+    var stage = this.props.state.stage
+    var window1 = this.props.state.windowWidth
+    var position = (window1 - stage) / 2
     
   return (
       <div>
@@ -28,7 +32,7 @@ render : function() {
             <rect x="0" y="0" width="100%" height={baseLineHeight} fillOpacity="1"  strokeOpacity="0" fill="url(#Division)"/>
           </pattern>
         </defs>
-          <rect  x="0" y="0" width="100%" height="100%" fill="url(#baselinePattern)" fillOpacity={visibility}></rect>
+          <rect  x={position} y="0" width={stage} height="100%" fill="url(#baselinePattern)" fillOpacity={visibility}></rect>
       </svg>
       </div>
     )

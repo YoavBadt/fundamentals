@@ -1,16 +1,7 @@
 import React from 'react';
 
 var ColumnComponent = React.createClass({
-  propTypes :  {
-      baseUnit : React.PropTypes.number,
-      columnwidth : React.PropTypes.number,
-      gutterWidth : React.PropTypes.number,
-      baseLineHeight : React.PropTypes.number,
-      rowHeight : React.PropTypes.number,
-      rowGutter : React.PropTypes.number,
-      gridColor : React.PropTypes.string,
-      visibility : React.PropTypes.number
-  },
+ 
   render : function(){
     var style = {
       base: {
@@ -100,6 +91,7 @@ var ColumnComponent = React.createClass({
           strokeWidth="1"
           stroke={color}
           strokeOpacity={strokeOpacity}
+          opacity={visibility}
           x1={position - gutterhalf }
           x2={position - gutterhalf }
           y1="0"
@@ -110,6 +102,7 @@ var ColumnComponent = React.createClass({
           strokeWidth="1"
           stroke={color}
           strokeOpacity={strokeOpacity}
+          opacity={visibility}
           x1={position - gutter1 }
           x2={position - gutter1 }
           y1="0"
@@ -129,6 +122,7 @@ var ColumnComponent = React.createClass({
           strokeWidth="1"
           stroke={color}
           strokeOpacity={strokeOpacity}
+          opacity={visibility}
           x1={position + stage + gutterhalf }
           x2={position + stage + gutterhalf }
           y1="0"
@@ -139,6 +133,7 @@ var ColumnComponent = React.createClass({
           strokeWidth="1"
           stroke={color}
           strokeOpacity={strokeOpacity}
+          opacity={visibility}
           x1={position + stage + gutter1 }
           x2={position + stage + gutter1 }
           y1="0"
